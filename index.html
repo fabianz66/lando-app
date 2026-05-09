@@ -101,7 +101,7 @@
                         Unirme a la lista de espera
                         <i data-lucide="chevron-right" class="w-5 h-5"></i>
                     </a>
-                    <p class="text-sm text-gray-500 font-medium italic">3 meses gratis para fundadores</p>
+                    <p class="text-sm text-gray-500 font-medium italic">Acceso prioritario para fundadores</p>
                 </div>
             </div>
         </section>
@@ -238,25 +238,83 @@
         <!-- Waitlist Form -->
         <section id="waitlist" class="py-24 bg-white relative">
             <div class="container mx-auto px-6 max-w-3xl">
-                <div class="bg-gray-50 rounded-[2rem] p-8 md:p-16 border border-gray-100 shadow-xl overflow-hidden relative">
+                <div id="form-container" class="bg-gray-50 rounded-[2rem] p-8 md:p-16 border border-gray-100 shadow-xl overflow-hidden relative min-h-[400px] flex items-center justify-center">
                     <div class="absolute top-0 right-0 p-8 opacity-5">
                         <i data-lucide="message-circle" class="w-48 h-48"></i>
                     </div>
                     
-                    <div class="relative z-10 text-center">
+                    <!-- Step 1: Email Capture -->
+                    <div id="step-email" class="relative z-10 text-center w-full">
                         <h2 class="text-3xl md:text-4xl font-bold mb-6">Recuperá tu tranquilidad hoy.</h2>
-                        <p class="text-gray-600 mb-10">Unite a la lista de espera exclusiva. Los primeros 50 landlords obtienen <strong>3 meses de servicio premium gratis.</strong></p>
+                        <p class="text-gray-600 mb-10">Unite a la lista de espera exclusiva para obtener beneficios de fundador cuando lancemos.</p>
                         
-                        <form action="https://formspree.io/f/mpqbyydr" method="POST" class="flex flex-col gap-4 max-w-md mx-auto">
+                        <form id="email-form" class="flex flex-col gap-4 max-w-md mx-auto">
                             <div class="relative">
                                 <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"></i>
-                                <input type="email" name="email" placeholder="Tu correo electrónico" class="w-full pl-12 pr-6 py-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none transition-all" required>
+                                <input type="email" id="email-input" name="email" placeholder="Tu correo electrónico" class="w-full pl-12 pr-6 py-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 outline-none transition-all" required>
                             </div>
-                            <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-lg shadow-brand-600/20">
-                                Obtener 3 meses gratis
+                            <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-lg shadow-brand-600/20 flex items-center justify-center gap-2">
+                                <span id="btn-text">Unirme a la lista</span>
+                                <div id="btn-loader" class="hidden animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                             </button>
                         </form>
                         <p class="mt-6 text-sm text-gray-500">No compartimos tus datos. Solo te avisaremos cuando estemos listos.</p>
+                    </div>
+
+                    <!-- Step 2: Survey -->
+                    <div id="step-survey" class="relative z-10 text-center w-full hidden">
+                        <div class="bg-brand-100 text-brand-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="check-circle" class="w-8 h-8"></i>
+                        </div>
+                        <h2 class="text-2xl md:text-3xl font-bold mb-4">¡Gracias por unirte!</h2>
+                        <p class="text-gray-600 mb-8">Ayudanos a priorizar lo más importante para vos:</p>
+                        
+                        <form id="survey-form" class="text-left max-w-md mx-auto space-y-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-3">1. ¿Cuál función es la más crítica para vos?</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-brand-500 transition-all">
+                                        <input type="radio" name="feature" value="filtro" class="text-brand-600 focus:ring-brand-500" required>
+                                        <span class="text-gray-700 text-sm">Filtrado de interesados</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-brand-500 transition-all">
+                                        <input type="radio" name="feature" value="sinpe" class="text-brand-600 focus:ring-brand-500">
+                                        <span class="text-gray-700 text-sm">Validación automática de SINPE</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-brand-500 transition-all">
+                                        <input type="radio" name="feature" value="contratos" class="text-brand-600 focus:ring-brand-500">
+                                        <span class="text-gray-700 text-sm">Gestión de contratos legales</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-3">2. Lando costará unos ₡7,900/mes. ¿Estarías dispuesto a pagarlo?</label>
+                                <div class="flex gap-4">
+                                    <label class="flex-1 flex items-center justify-center gap-2 p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-brand-500 transition-all">
+                                        <input type="radio" name="pay" value="yes" class="text-brand-600 focus:ring-brand-500" required>
+                                        <span class="text-gray-700 text-sm">Sí</span>
+                                    </label>
+                                    <label class="flex-1 flex items-center justify-center gap-2 p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-brand-500 transition-all">
+                                        <input type="radio" name="pay" value="no" class="text-brand-600 focus:ring-brand-500">
+                                        <span class="text-gray-700 text-sm">No</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-lg shadow-brand-600/20">
+                                Enviar respuestas
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Step 3: Final Success -->
+                    <div id="step-final" class="relative z-10 text-center w-full hidden">
+                        <div class="bg-emerald-100 text-emerald-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="party-popper" class="w-10 h-10"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold mb-4">¡Recibido!</h2>
+                        <p class="text-gray-600">Tus respuestas nos ayudan a construir el mejor asistente para Costa Rica. Te avisaremos muy pronto.</p>
                     </div>
                 </div>
             </div>
@@ -287,6 +345,77 @@
                     behavior: 'smooth'
                 });
             });
+        });
+
+        // Form Logic
+        const emailForm = document.getElementById('email-form');
+        const surveyForm = document.getElementById('survey-form');
+        const stepEmail = document.getElementById('step-email');
+        const stepSurvey = document.getElementById('step-survey');
+        const stepFinal = document.getElementById('step-final');
+        const btnText = document.getElementById('btn-text');
+        const btnLoader = document.getElementById('btn-loader');
+        
+        let userEmail = "";
+
+        emailForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            userEmail = document.getElementById('email-input').value;
+            
+            // UI Feedback
+            btnText.textContent = "Uniéndote...";
+            btnLoader.classList.remove('hidden');
+            emailForm.classList.add('opacity-50', 'pointer-events-none');
+
+            try {
+                // Submit email to Formspree
+                const response = await fetch("https://formspree.io/f/mpqbyydr", {
+                    method: "POST",
+                    body: JSON.stringify({ email: userEmail }),
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    // Transition to Survey
+                    stepEmail.classList.add('hidden');
+                    stepSurvey.classList.remove('hidden');
+                    lucide.createIcons(); // Re-init icons for the new step
+                } else {
+                    alert("Hubo un error. Por favor intenta de nuevo.");
+                }
+            } catch (error) {
+                alert("Error de conexión. Intenta de nuevo.");
+            } finally {
+                btnText.textContent = "Unirme a la lista";
+                btnLoader.classList.add('hidden');
+                emailForm.classList.remove('opacity-50', 'pointer-events-none');
+            }
+        });
+
+        surveyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(surveyForm);
+            const data = {
+                email: userEmail,
+                feature: formData.get('feature'),
+                will_pay_7900: formData.get('pay')
+            };
+
+            // Transition to Final Step immediately for better UX
+            stepSurvey.classList.add('hidden');
+            stepFinal.classList.remove('hidden');
+            lucide.createIcons();
+
+            // Submit survey data in background
+            try {
+                await fetch("https://formspree.io/f/mpqbyydr", {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+                });
+            } catch (error) {
+                console.error("Survey submission failed", error);
+            }
         });
     </script>
 </body>
